@@ -26,17 +26,18 @@ namespace ConsoleApp3
 
 
           }
-        // Traslada la cara completa, incluyendo el punto de origen
+       
         public void Trasladar(float dx, float dy, float dz)
         {
             Origen.Trasladar(dx, dy, dz);
             Vertice1.Trasladar(dx, dy, dz);
             Vertice2.Trasladar(dx, dy, dz);
+
             Vertice3.Trasladar(dx, dy, dz);
             Vertice4.Trasladar(dx, dy, dz);
         }
 
-        // Rota la cara alrededor del eje X tomando en cuenta el punto de origen
+       
         public void RotarX(float angulo)
         {
             Vertice1.RotarX(angulo, Origen);
@@ -45,7 +46,7 @@ namespace ConsoleApp3
             Vertice4.RotarX(angulo, Origen);
         }
 
-        // Rota la cara alrededor del eje Y tomando en cuenta el punto de origen
+      
         public void RotarY(float angulo)
         {
             Vertice1.RotarY(angulo, Origen);
@@ -54,7 +55,7 @@ namespace ConsoleApp3
             Vertice4.RotarY(angulo, Origen);
         }
 
-        // Rota la cara alrededor del eje Z tomando en cuenta el punto de origen
+   
         public void RotarZ(float angulo)
         {
             Vertice1.RotarZ(angulo, Origen);
@@ -63,7 +64,7 @@ namespace ConsoleApp3
             Vertice4.RotarZ(angulo, Origen);
         }
 
-        // Escala la cara tomando en cuenta el punto de origen
+   
         public void Escalar(float factorX, float factorY, float factorZ)
         {
             // Calcular el centro de la cara

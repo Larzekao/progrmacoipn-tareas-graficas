@@ -24,7 +24,7 @@ namespace ConsoleApp3
             float halfLargo = largo / 2;
             float halfProfundidad = profundidad / 2;
 
-            // Crear las caras del rectángulo 3D
+            
             CaraFrontal = new UnCara(
                 new UncPunto(verticeCentro.X - halfAncho, verticeCentro.Y - halfLargo, verticeCentro.Z - halfProfundidad),
                 new UncPunto(verticeCentro.X + halfAncho, verticeCentro.Y - halfLargo, verticeCentro.Z - halfProfundidad),
@@ -75,8 +75,7 @@ namespace ConsoleApp3
         }
 
 
-        // Métodos para aplicar transformaciones a todas las caras
-        // Método para aplicar transformaciones de traslación
+        
         public void Trasladar(float dx, float dy, float dz)
         {
             offsetX += dx;
@@ -84,7 +83,7 @@ namespace ConsoleApp3
             offsetZ += dz;
         }
 
-        // Método para aplicar transformaciones de escala
+        
         public void Escalar(float factorX, float factorY, float factorZ)
         {
             scaleX *= factorX;
@@ -92,19 +91,18 @@ namespace ConsoleApp3
             scaleZ *= factorZ;
         }
 
-        // Método para aplicar rotación en el eje X
         public void RotarX(float angulo)
         {
             rotationX += angulo;
         }
 
-        // Método para aplicar rotación en el eje Y
+
         public void RotarY(float angulo)
         {
             rotationY += angulo;
         }
 
-        // Método para aplicar rotación en el eje Z
+       
         public void RotarZ(float angulo)
         {
             rotationZ += angulo;
@@ -119,16 +117,16 @@ namespace ConsoleApp3
             CaraSuperior.Color = color;
             CaraInferior.Color = color;
         }
-        // Método para dibujar el rectángulo 3D con todas las transformaciones aplicadas
+      
         public void Dibujar()
         {
             GL.PushMatrix(); // Guardar el estado actual de la matriz
 
             // Aplicar traslación, escala y rotaciones a todo el rectángulo
             GL.Translate(offsetX, offsetY, offsetZ);
-            GL.Rotate(rotationX, 1.0, 0.0, 0.0); // Rotación en X
-            GL.Rotate(rotationY, 0.0, 1.0, 0.0); // Rotación en Y
-            GL.Rotate(rotationZ, 0.0, 0.0, 1.0); // Rotación en Z
+            GL.Rotate(rotationX, 1.0, 0.0, 0.0);
+            GL.Rotate(rotationY, 0.0, 1.0, 0.0); 
+            GL.Rotate(rotationZ, 0.0, 0.0, 1.0); 
             GL.Scale(scaleX, scaleY, scaleZ);
 
             // Dibujar cada cara
@@ -139,7 +137,7 @@ namespace ConsoleApp3
             CaraSuperior.Dibujar();
             CaraInferior.Dibujar();
 
-            GL.PopMatrix(); // Restaurar el estado original de la matriz
+            GL.PopMatrix(); 
         }
 
         public override string ToString()

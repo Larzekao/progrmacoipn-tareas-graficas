@@ -15,7 +15,6 @@ namespace ConsoleApp3
             Z = z;
         }
 
-        // Método para trasladar el punto
         public void Trasladar(float dx, float dy, float dz)
         {
             X += dx;
@@ -23,21 +22,21 @@ namespace ConsoleApp3
             Z += dz;
         }
 
-        // Método para rotar el punto alrededor del eje X tomando en cuenta un origen
+       
         public void RotarX(float angulo, UncPunto origen)
         {
             float radianes = MathF.PI * angulo / 180.0f;
 
-            // Trasladar el punto al origen
+           
             float nuevoY = (Y - origen.Y) * MathF.Cos(radianes) - (Z - origen.Z) * MathF.Sin(radianes);
             float nuevoZ = (Y - origen.Y) * MathF.Sin(radianes) + (Z - origen.Z) * MathF.Cos(radianes);
 
-            // Ajustar nuevamente según el origen
+            
             Y = nuevoY + origen.Y;
             Z = nuevoZ + origen.Z;
         }
 
-        // Método para rotar el punto alrededor del eje Y tomando en cuenta un origen
+       
         public void RotarY(float angulo, UncPunto origen)
         {
             float radianes = MathF.PI * angulo / 180.0f;
@@ -49,7 +48,6 @@ namespace ConsoleApp3
             Z = nuevoZ + origen.Z;
         }
 
-        // Método para rotar el punto alrededor del eje Z tomando en cuenta un origen
         public void RotarZ(float angulo, UncPunto origen)
         {
             float radianes = MathF.PI * angulo / 180.0f;
@@ -61,7 +59,7 @@ namespace ConsoleApp3
             Y = nuevoY + origen.Y;
         }
 
-        // Método para escalar el punto tomando en cuenta un origen
+
         public void Escalar(float factorX, float factorY, float factorZ, UncPunto origen)
         {
             X = origen.X + (X - origen.X) * factorX;
