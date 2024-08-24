@@ -1,98 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using OpenTK.Graphics;
+﻿using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
-namespace ConsoleApp3;
-public class UnCara
+namespace ConsoleApp3
 {
-    // Vértices de la cara
-    public UncPunto VerticeA { get; set; }
-    public UncPunto VerticeB { get; set; }
-    public UncPunto VerticeC { get; set; }
-    public UncPunto VerticeD { get; set; }
-
-    // Color de la cara
-    public Color4 Color { get; set; }
-
-    // Constructor
-    public UnCara(UncPunto verticeA, UncPunto verticeB, UncPunto verticeC, UncPunto verticeD, Color4 color)
+    public class UnCara
     {
-        VerticeA = verticeA;
-        VerticeB = verticeB;
-        VerticeC = verticeC;
-        VerticeD = verticeD;
-        Color = color;
-    }
+        public UncPunto Vertice1 { get; set; }
+        public UncPunto Vertice2 { get; set; }
+        public UncPunto Vertice3 { get; set; }
+        public UncPunto Vertice4 { get; set; }
+        public UncPunto Origen { get; set; } // Punto de origen
+        public Color4 Color { get; set; }
 
-    // Método para trasladar la cara
-    public void Trasladar(float dx, float dy, float dz)
-    {
-        VerticeA.X += dx;
-        VerticeA.Y += dy;
-        VerticeA.Z += dz;
+        public UnCara(UncPunto vertice1, UncPunto vertice2, UncPunto vertice3, UncPunto vertice4, UncPunto origen, Color4 color)
+        {
+            Vertice1 = vertice1;
+            Vertice2 = vertice2;
+            Vertice3 = vertice3;
+            Vertice4 = vertice4;
+            Origen = origen;
+            Color = color;
+        }
+        public void Cambiaror(Color4 col){
+            this.Color = col;
 
-        VerticeB.X += dx;
-        VerticeB.Y += dy;
-        VerticeB.Z += dz;
 
-        VerticeC.X += dx;
-        VerticeC.Y += dy;
-        VerticeC.Z += dz;
+          }
+        // Traslada la cara completa, incluyendo el punto de origen
+        public void Trasladar(float dx, float dy, float dz)
+        {
+            Origen.Trasladar(dx, dy, dz);
+            Vertice1.Trasladar(dx, dy, dz);
+            Vertice2.Trasladar(dx, dy, dz);
+            Vertice3.Trasladar(dx, dy, dz);
+            Vertice4.Trasladar(dx, dy, dz);
+        }
 
-        VerticeD.X += dx;
-        VerticeD.Y += dy;
-        VerticeD.Z += dz;
-    }
+        // Rota la cara alrededor del eje X tomando en cuenta el punto de origen
+        public void RotarX(float angulo)
+        {
+            Vertice1.RotarX(angulo, Origen);
+            Vertice2.RotarX(angulo, Origen);
+            Vertice3.RotarX(angulo, Origen);
+            Vertice4.RotarX(angulo, Origen);
+        }
 
-    // Método para rotar la cara alrededor del eje X
-    public void RotarX(float angulo)
-    {
-        float rad = angulo * (float)Math.PI / 180.0f;
-        float cosA = (float)Math.Cos(rad);
-        float sinA = (float)Math.Sin(rad);
+        // Rota la cara alrededor del eje Y tomando en cuenta el punto de origen
+        public void RotarY(float angulo)
+        {
+            Vertice1.RotarY(angulo, Origen);
+            Vertice2.RotarY(angulo, Origen);
+            Vertice3.RotarY(angulo, Origen);
+            Vertice4.RotarY(angulo, Origen);
+        }
 
-        VerticeA = RotarPuntoX(VerticeA, cosA, sinA);
-        VerticeB = RotarPuntoX(VerticeB, cosA, sinA);
-        VerticeC = RotarPuntoX(VerticeC, cosA, sinA);
-        VerticeD = RotarPuntoX(VerticeD, cosA, sinA);
-    }
+        // Rota la cara alrededor del eje Z tomando en cuenta el punto de origen
+        public void RotarZ(float angulo)
+        {
+            Vertice1.RotarZ(angulo, Origen);
+            Vertice2.RotarZ(angulo, Origen);
+            Vertice3.RotarZ(angulo, Origen);
+            Vertice4.RotarZ(angulo, Origen);
+        }
 
-    private UncPunto RotarPuntoX(UncPunto p, float cosA, float sinA)
-    {
-        float y = p.Y * cosA - p.Z * sinA;
-        float z = p.Y * sinA + p.Z * cosA;
-        return new UncPunto(p.X, y, z);
-    }
+        // Escala la cara tomando en cuenta el punto de origen
+        public void Escalar(float factorX, float factorY, float factorZ)
+        {
+            // Calcular el centro de la cara
+            float centroX = (Vertice1.X + Vertice2.X + Vertice3.X + Vertice4.X) / 4;
+            float centroY = (Vertice1.Y + Vertice2.Y + Vertice3.Y + Vertice4.Y) / 4;
+            float centroZ = (Vertice1.Z + Vertice2.Z + Vertice3.Z + Vertice4.Z) / 4;
 
-    // Método para escalar la cara
-    public void Escalar(float factorX, float factorY, float factorZ)
-    {
-        VerticeA = EscalarPunto(VerticeA, factorX, factorY, factorZ);
-        VerticeB = EscalarPunto(VerticeB, factorX, factorY, factorZ);
-        VerticeC = EscalarPunto(VerticeC, factorX, factorY, factorZ);
-        VerticeD = EscalarPunto(VerticeD, factorX, factorY, factorZ);
-    }
+            // Ajustar cada vértice
+            Vertice1.Escalar(factorX, factorY, factorZ, new UncPunto(centroX, centroY, centroZ));
+            Vertice2.Escalar(factorX, factorY, factorZ, new UncPunto(centroX, centroY, centroZ));
+            Vertice3.Escalar(factorX, factorY, factorZ, new UncPunto(centroX, centroY, centroZ));
+            Vertice4.Escalar(factorX, factorY, factorZ, new UncPunto(centroX, centroY, centroZ));
+        }
 
-    private UncPunto EscalarPunto(UncPunto p, float factorX, float factorY, float factorZ)
-    {
-        return new UncPunto(p.X * factorX, p.Y * factorY, p.Z * factorZ);
-    }
 
-    // Método para dibujar la cara
-    public void Dibujar()
-    {
-        GL.Begin(PrimitiveType.Quads);
-        GL.Color4(Color);
-        GL.Vertex3(VerticeA.X, VerticeA.Y, VerticeA.Z);
-        GL.Vertex3(VerticeB.X, VerticeB.Y, VerticeB.Z);
-        GL.Vertex3(VerticeC.X, VerticeC.Y, VerticeC.Z);
-        GL.Vertex3(VerticeD.X, VerticeD.Y, VerticeD.Z);
-        GL.End();
+        public void Dibujar()
+        {
+            GL.Color4(Color);
+            GL.Begin(PrimitiveType.Quads);
+            GL.Vertex3(Vertice1.X, Vertice1.Y, Vertice1.Z);
+            GL.Vertex3(Vertice2.X, Vertice2.Y, Vertice2.Z);
+            GL.Vertex3(Vertice3.X, Vertice3.Y, Vertice3.Z);
+            GL.Vertex3(Vertice4.X, Vertice4.Y, Vertice4.Z);
+            GL.End();
+        }
+
+        public override string ToString()
+        {
+            return $"Vertices: {Vertice1}, {Vertice2}, {Vertice3}, {Vertice4}, Origen: {Origen}";
+        }
     }
 }
-
